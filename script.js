@@ -1,6 +1,8 @@
+// var for the start button
 var start = document.getElementById("start");
-
-// use an array of objects for the questions
+// var for current question
+var currentQuestion = 0
+// an array of objects for the questions
 var quizQuestions = [
     {question: "What does CSS do?",
     answers: {
@@ -34,16 +36,33 @@ var quizQuestions = [
     },
     correctAnswer: "2" },
 ];
+console.log(quizQuestions[0]);
 // oncclick start game function
 // function to begin the quiz
-function beginQuiz(){
+start.addEventListener("click", function beginQuiz(){
     // remove the start button when the quiz has begun
     $("button").remove();
-    $("<div>").appendTo("body");
-}
+    // create new div and add to the body for the question
+    var questionBox = $("<body>").append($("<div>"));
+   
+    $(questionBox).addClass("card", "rounded", "bg-info");
+    // getting question and appending new div 
+    var questionTitle = $("<div>").text(quizQuestions[0].question);
+    $(questionBox).append(questionTitle);
+
+    // generate answers and buttons from object
+    // click event for answer, alert right or wrong using if else
+        // generate next question if right and add point
+        // if wrong reduce time
+    // save final score to local storage
+
+
+});
 
 // function to show score\
-function showScore(){}
+function showScore(){};
+// form to input initials
+// load score and display results
 
 
 
@@ -69,3 +88,4 @@ function showScore(){}
         
         // create current question var, use to generate next Q when answered
         // can use jquery .empty() to empty div
+
