@@ -1,63 +1,66 @@
-// var for the start button
-var start = document.getElementById("start");
-// var for current question
-var currentQuestion = 0
 // an array of objects for the questions
 var quizQuestions = [
-    {question: "What does CSS do?",
-    answers: {
-        1: "a",
-        2: "b",
-        3: "c",
+    {question: "What does CSS stand for?",
+    answers: ["computer super style", "cascading style sheet", "DJ Khaled"],
+    correctAnswer: 2 
     },
-    correctAnswer: "2" },
 
     {question: "What does CSS do?",
-    answers: {
-        1: "a",
-        2: "b",
-        3: "c",
+    answers: ["a", "b", "c"],
+    correctAnswer: 2 
     },
-    correctAnswer: "3" },
 
     {question: "What does CSS do?",
-    answers: {
-        1: "a",
-        2: "b",
-        3: "c",
+    answers: ["a", "b", "c"],
+    correctAnswer: 2 
     },
-    correctAnswer: "3" },
 
     {question: "What does CSS do?",
-    answers: {
-        1: "a",
-        2: "b",
-        3: "c",
+    answers: ["a", "b", "c"],
+    correctAnswer: 2 
     },
-    correctAnswer: "2" },
 ];
-console.log(quizQuestions[0]);
-// oncclick start game function
-// function to begin the quiz
-start.addEventListener("click", function beginQuiz(){
-    // remove the start button when the quiz has begun
-    $("button").remove();
-    // create new div and add to the body for the question
-    var questionBox = $("<body>").append($("<div>"));
+
+// var for the start button
+var start = document.getElementById("start");
+var body = document.getElementsByTagName("body");
+var questionContainer = document.getElementsByClassName("questionContainer");
+
+// var for the last question in the quiz
+var finalQuestion = (quizQuestions.length)-1;
+// var for current question
+let currentQuestion = 0;
+let score = 0;
+
+// function to generate questions
+function generateQuestion(){
+    start.remove();
+    let q = quizQuestions[currentQuestion];
+    var questionBox = document.createElement("div");
+    questionBox.innerHTML = "<p>" + q.question + "</p>";
+    $(questionBox).appendTo(questionContainer);
+    for( var i = 0; i < q.answers.length; i++){
+        var answerBtns = document.createElement("button");
+        answerBtns.innerHTML = "<p>" + q.answers[i] + "</p>";
+        $(answerBtns).appendTo(questionContainer);
+
+    } ;  
+};
+
+function beginQuiz(){
+
+}
+
    
-    $(questionBox).addClass("card", "rounded", "bg-info");
-    // getting question and appending new div 
-    var questionTitle = $("<div>").text(quizQuestions[0].question);
-    $(questionBox).append(questionTitle);
 
     // generate answers and buttons from object
     // click event for answer, alert right or wrong using if else
         // generate next question if right and add point
         // if wrong reduce time
     // save final score to local storage
+start.addEventListener("click", generateQuestion);
 
 
-});
 
 // function to show score\
 function showScore(){};
