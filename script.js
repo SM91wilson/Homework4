@@ -25,16 +25,18 @@ var quizQuestions = [
 var start = document.getElementById("start");
 var body = document.getElementsByTagName("body");
 var questionContainer = document.getElementsByClassName("questionContainer");
-
 // var for the last question in the quiz
 var finalQuestion = (quizQuestions.length)-1;
 // var for current question
 let currentQuestion = 0;
 let score = 0;
+let quizTime = 40;
+let counter = 0;
+let TIMER;
+let count = 0;
 
 // function to generate questions
 function generateQuestion(){
-    start.remove();
     let q = quizQuestions[currentQuestion];
     var questionBox = document.createElement("div");
     questionBox.innerHTML = "<p>" + q.question + "</p>";
@@ -47,18 +49,33 @@ function generateQuestion(){
     } ;  
 };
 
-function beginQuiz(){
+function generateTimer(){
+    var qtimer = document.createElement("h2");
+    $(qtimer).appendTo(body);
+    qtimer.innerHTML = "<p>" + "time left: " + quizTime + "</p>";
+    var timerInterval = setInterval(function() {
+        quizTime--;
+    
+        if(quizTime === 0) {
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+};
 
-}
+function beginQuiz(){
+    start.remove();
+    generateQuestion();
+    generateTimer();
+};
 
    
 
-    // generate answers and buttons from object
+    
     // click event for answer, alert right or wrong using if else
         // generate next question if right and add point
         // if wrong reduce time
     // save final score to local storage
-start.addEventListener("click", generateQuestion);
+start.addEventListener("click", beginQuiz);
 
 
 
