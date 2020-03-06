@@ -2,7 +2,7 @@
 var quizQuestions = [
     {question: "What does CSS stand for?",
     answers: ["computer super style", "cascading style sheet", "DJ Khaled"],
-    correctAnswer: 2 
+    correctAnswer: 1 
     },
 
     {question: "What does CSS do?",
@@ -17,7 +17,7 @@ var quizQuestions = [
 
     {question: "What does CSS do?",
     answers: ["a", "b", "c"],
-    correctAnswer: 2 
+    correctAnswer: 0 
     },
 ];
 
@@ -30,52 +30,62 @@ var finalQuestion = (quizQuestions.length)-1;
 // var for current question
 let currentQuestion = 0;
 let score = 0;
-let timeLeft = 40;
+let timeLeft = 41;
 
 
 // function to generate questions
 function generateQuestion(){
+    // var to set the current question according to the object
     let q = quizQuestions[currentQuestion];
     var questionBox = document.createElement("div");
+    // adds the text content of the current question
     questionBox.innerHTML = "<p>" + q.question + "</p>";
     $(questionBox).appendTo(questionContainer);
+    // loops through the answers, creating a button for each and adding the text content from the array
     for( var i = 0; i < q.answers.length; i++){
         var answerBtns = document.createElement("button");
-        answerBtns.innerHTML = "<p>" + q.answers[i] + "</p>";
+        // set attribute to try get the index of the answer from the array // doesnt work yet
+        answerBtns.setAttribute("index", q.answers[i]);
+        answerBtns.innerHTML = q.answers[i];
         $(answerBtns).appendTo(questionContainer);
+  
+   
 
-    } ;  
+    } ; $(".container").on("click", function(){
+        console.log(q.answers[i]);
+    } );
 };
 
+// function to generate the timer
 function generateTimer() {
+    // create element for timer to be in
     var qtimer = document.createElement("h2");
     $(qtimer).appendTo(body);
+    // function to reduce time
     var timerInterval = setInterval(function() {
       timeLeft--;
       qtimer.textContent = timeLeft + " seconds left.";
 
+        // if time is less than or equal to zero, quiz stops
       if(timeLeft <= 0) {
         clearInterval(timerInterval);
         $(questionContainer).empty();
         qtimer.textContent = "Time's Up!"
         }
-  
     }, 1000);
   }
+
+function checkAnswer(){
+
+}
 
 
 function beginQuiz(){
     start.remove();
     generateQuestion();
-    generateTimer();
+    // generateTimer();
 };
 
-   
-
-    
-    // click event for answer, alert right or wrong using if else
-        // generate next question if right and add point
-        // if wrong reduce time
     // save final score to local storage
 start.addEventListener("click", beginQuiz);
 
