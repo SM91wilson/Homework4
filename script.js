@@ -42,17 +42,16 @@ function generateQuestion(){
     questionBox.innerHTML = "<p>" + q.question + "</p>";
     $(questionBox).appendTo(questionContainer);
     // loops through the answers, creating a button for each and adding the text content from the array
-    for( var i = 0; i < q.answers.length; i++){
+        q.answers.forEach((answer, answerIndex) => {
         var answerBtns = document.createElement("button");
-        // set attribute to try get the index of the answer from the array // doesnt work yet
-        answerBtns.setAttribute("index", q.answers[i]);
-        answerBtns.innerHTML = q.answers[i];
+        // set attribute to try get the index of the answer from the array
+        answerBtns.setAttribute("index", answerIndex);
+        answerBtns.innerHTML = answer;
         $(answerBtns).appendTo(questionContainer);
+    });
   
-   
-
-    } ; $(".container").on("click", function(){
-        console.log(q.answers[i]);
+     $(".container").on("click", function(){
+        
     } );
 };
 
