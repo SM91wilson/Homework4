@@ -30,10 +30,8 @@ var finalQuestion = (quizQuestions.length)-1;
 // var for current question
 let currentQuestion = 0;
 let score = 0;
-let quizTime = 40;
-let counter = 0;
-let TIMER;
-let count = 0;
+let timeLeft = 40;
+
 
 // function to generate questions
 function generateQuestion(){
@@ -49,18 +47,22 @@ function generateQuestion(){
     } ;  
 };
 
-function generateTimer(){
+function generateTimer() {
     var qtimer = document.createElement("h2");
     $(qtimer).appendTo(body);
-    qtimer.innerHTML = "<p>" + "time left: " + quizTime + "</p>";
     var timerInterval = setInterval(function() {
-        quizTime--;
-    
-        if(quizTime === 0) {
-          clearInterval(timerInterval);
+      timeLeft--;
+      qtimer.textContent = timeLeft + " seconds left.";
+
+      if(timeLeft <= 0) {
+        clearInterval(timerInterval);
+        $(questionContainer).empty();
+        qtimer.textContent = "Time's Up!"
         }
-      }, 1000);
-};
+  
+    }, 1000);
+  }
+
 
 function beginQuiz(){
     start.remove();
