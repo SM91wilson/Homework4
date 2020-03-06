@@ -52,7 +52,10 @@ function generateQuestion(){
     });
     // event listener to identify which button is being clicked
     $("button").on("click", function(){
-         console.log(this.textContent);   
+         console.log(this.textContent);
+         if(this.textContent === q.correctAnswer) {
+             
+         }   
     });
 };
 
