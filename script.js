@@ -2,7 +2,7 @@
 var quizQuestions = [
     {question: "What does CSS stand for?",
     answers: ["computer super style", "cascading style sheet", "DJ Khaled"],
-    correctAnswer: 1 
+    correctAnswer: "cascading style sheet" 
     },
 
     {question: "What does CSS do?",
@@ -47,12 +47,13 @@ function generateQuestion(){
         // set attribute to try get the index of the answer from the array
         answerBtns.setAttribute("index", answerIndex);
         answerBtns.innerHTML = answer;
-        $(answerBtns).appendTo(questionContainer);
-    });
-  
-     $(".container").on("click", function(){
+        $(answerBtns).appendTo(questionContainer); 
         
-    } );
+    });
+    // event listener to identify which button is being clicked
+    $("button").on("click", function(){
+         console.log(this.textContent);   
+    });
 };
 
 // function to generate the timer
