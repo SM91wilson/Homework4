@@ -7,17 +7,17 @@ var quizQuestions = [
 
     {question: "What does CSS do?",
     answers: ["a", "b", "c"],
-    correctAnswer: 2 
+    correctAnswer: "b" 
     },
 
-    {question: "What does CSS do?",
+    {question: "AAAAAWhat does CSS do?",
     answers: ["a", "b", "c"],
-    correctAnswer: 2 
+    correctAnswer: "b" 
     },
 
-    {question: "What does CSS do?",
+    {question: "WHHHHHhat does CSS do?",
     answers: ["a", "b", "c"],
-    correctAnswer: 0 
+    correctAnswer: "c"
     },
 ];
 
@@ -28,15 +28,18 @@ var questionContainer = document.getElementsByClassName("questionContainer");
 // var for the last question in the quiz
 var finalQuestion = (quizQuestions.length)-1;
 // var for current question
-let currentQuestion = 0;
+var currentQuestion = 0;
 let score = 0;
-let timeLeft = 41;
-
+var timeLeft = 41;
+let q = quizQuestions[currentQuestion];
 
 // function to generate questions
 function generateQuestion(){
     // var to set the current question according to the object
-    let q = quizQuestions[currentQuestion];
+    // var scoreBox = document.createElement("div");
+    // scoreBox.classList.add("scoreDisplay");
+    // scoreBox.innerHTML = score
+    $(scoreBox).appendTo(questionContainer);
     var questionBox = document.createElement("div");
     // adds the text content of the current question
     questionBox.innerHTML = "<p>" + q.question + "</p>";
@@ -51,12 +54,15 @@ function generateQuestion(){
         
     });
     // event listener to identify which button is being clicked
-    $("button").on("click", function(){
-         console.log(this.textContent);
-         if(this.textContent === q.correctAnswer) {
-             
-         }   
-    });
+    $("button").on("click", checkAnswer)
+        //  console.log(this.textContent);
+};
+
+// function for next question
+function generateNextQuestion(){
+    currentQuestion++;
+    q = quizQuestions[currentQuestion];
+    generateQuestion();
 };
 
 // function to generate the timer
@@ -79,14 +85,21 @@ function generateTimer() {
   }
 
 function checkAnswer(){
-
-}
+    if(this.textContent === q.correctAnswer){
+        if(currentQuestion<finalQuestion){
+            generateNextQuestion();
+        }
+        score++;
+        }else{
+        timeLeft-=5;
+    };
+};
 
 
 function beginQuiz(){
     start.remove();
     generateQuestion();
-    // generateTimer();
+    generateTimer();
 };
 
     // save final score to local storage
