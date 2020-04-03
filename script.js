@@ -1,23 +1,27 @@
 // an array of objects for the questions
 var quizQuestions = [
-    {question: "What does CSS stand for?",
-    answers: ["computer super style", "cascading style sheet", "DJ Khaled"],
-    correctAnswer: "cascading style sheet" 
+    {
+        question: "What does CSS stand for?",
+        answers: ["computer super style", "cascading style sheet", "DJ Khaled"],
+        correctAnswer: "cascading style sheet"
     },
 
-    {question: "What does CSS do?",
-    answers: ["a", "b", "c"],
-    correctAnswer: "b" 
+    {
+        question: "What does CSS do?",
+        answers: ["a", "b", "c"],
+        correctAnswer: "b"
     },
 
-    {question: "AAAAAWhat does CSS do?",
-    answers: ["a", "b", "c"],
-    correctAnswer: "b" 
+    {
+        question: "AAAAAWhat does CSS do?",
+        answers: ["a", "b", "c"],
+        correctAnswer: "b"
     },
 
-    {question: "WHHHHHhat does CSS do?",
-    answers: ["a", "b", "c"],
-    correctAnswer: "c"
+    {
+        question: "WHHHHHhat does CSS do?",
+        answers: ["a", "b", "c"],
+        correctAnswer: "c"
     },
 ];
 
@@ -26,89 +30,121 @@ var start = document.getElementById("start");
 var body = document.getElementsByTagName("body");
 var questionContainer = document.getElementsByClassName("questionContainer");
 // var for the last question in the quiz
-var finalQuestion = (quizQuestions.length)-1;
+var finalQuestion = (quizQuestions.length) - 1;
 // var for current question
 var currentQuestion = 0;
 let score = 0;
+var qtimer = document.getElementById("qtimer")
 var timeLeft = 41;
 let q = quizQuestions[currentQuestion];
 
 // function to generate questions
-function generateQuestion(){
+function generateQuestion() {
     // var to set the current question according to the object
-    // var scoreBox = document.createElement("div");
-    // scoreBox.classList.add("scoreDisplay");
-    // scoreBox.innerHTML = score
-    $(scoreBox).appendTo(questionContainer);
-    var questionBox = document.createElement("div");
+    var questionBox = document.createElement("DIV");
     // adds the text content of the current question
     questionBox.innerHTML = "<p>" + q.question + "</p>";
     $(questionBox).appendTo(questionContainer);
     // loops through the answers, creating a button for each and adding the text content from the array
-        q.answers.forEach((answer, answerIndex) => {
-        var answerBtns = document.createElement("button");
+    q.answers.forEach((answer, answerIndex) => {
+        var answerBtns = document.createElement("BUTTON");
         // set attribute to try get the index of the answer from the array
         answerBtns.setAttribute("index", answerIndex);
+        answerBtns.classList.add("d-flex", "flex-column");
         answerBtns.innerHTML = answer;
-        $(answerBtns).appendTo(questionContainer); 
-        
+        $(answerBtns).appendTo(questionContainer);
+
     });
     // event listener to identify which button is being clicked
     $("button").on("click", checkAnswer)
-        //  console.log(this.textContent);
+    //  console.log(this.textContent);
 };
 
 // function for next question
-function generateNextQuestion(){
-    currentQuestion++;
-    q = quizQuestions[currentQuestion];
-    generateQuestion();
+function generateNextQuestion() {
+    if (currentQuestion < finalQuestion) {
+        currentQuestion++;
+        q = quizQuestions[currentQuestion];
+        console.log(currentQuestion)
+        console.log(finalQuestion)
+        generateQuestion();
+    }
 };
 
 // function to generate the timer
 function generateTimer() {
-    // create element for timer to be in
-    var qtimer = document.createElement("h2");
-    $(qtimer).appendTo(body);
     // function to reduce time
-    var timerInterval = setInterval(function() {
-      timeLeft--;
-      qtimer.textContent = timeLeft + " seconds left.";
-
+    var timerInterval = setInterval(function () {
+        timeLeft--;
+        qtimer.textContent = timeLeft + " seconds left.";
         // if time is less than or equal to zero, quiz stops
-      if(timeLeft <= 0) {
-        clearInterval(timerInterval);
-        $(questionContainer).empty();
-        qtimer.textContent = "Time's Up!"
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            $(questionContainer).empty();
+            qtimer.textContent = "Time's Up!"
         }
     }, 1000);
-  }
+    if (currentQuestion === finalQuestion) {
+        $(qtimer).empty();
+    }
+}
 
-function checkAnswer(){
-    if(this.textContent === q.correctAnswer){
-        if(currentQuestion<finalQuestion){
+function scoreBoard() {
+    var scoreBox = document.getElementById("scoreBox");
+    scoreBox.innerHTML = "score:" + score;
+    $(scoreBox).appendTo(body);
+}
+
+function checkAnswer() {
+    if (currentQuestion === finalQuestion) {
+        end();
+        return
+    } else if (this.textContent === q.correctAnswer) {
+        if (currentQuestion < finalQuestion) {
+            $(scoreBox).empty();
+            $(questionContainer).empty();
             generateNextQuestion();
         }
         score++;
-        }else{
-        timeLeft-=5;
+        scoreBoard();
+    } else if (currentQuestion === finalQuestion) {
+        end();
+    } else {
+        timeLeft -= 5;
     };
 };
 
-
-function beginQuiz(){
-    start.remove();
-    generateQuestion();
-    generateTimer();
+function end() {
+    $(questionContainer).empty();
+    $(qtimer).remove();
+    $("<h1>").text("Finished!").appendTo(body);
+    $("<h2>").text("You Scored: " + score + "!").appendTo(body);
+    $(scoreBox).remove();
+    $("<form>").appendTo(body)
+    $("<label>").attr("for", "initials").text("Initials:").appendTo("form");
+    $("<input>").attr({"type": "text"},{"id": "initials"},{"name":"initials"}).appendTo("form");
+    $("<button>").attr({"type": "submit"}, {"class": "btn"}).appendTo("form");
 };
 
-    // save final score to local storage
+$("submit").on("click", function(event){
+    event.preventDefault();
+    var highScores = JSON.parse(localStorage.getItem("highscore")) || [];
+
+})
+
+function beginQuiz() {
+    start.remove();
+    scoreBoard();
+    generateTimer();
+    generateQuestion();
+
+};
+
+// save final score to local storage
 start.addEventListener("click", beginQuiz);
 
 
 
-// function to show score\
-function showScore(){};
 // form to input initials
 // load score and display results
 
@@ -133,7 +169,7 @@ function showScore(){};
         // quizQuestions.forEach(function(question, questionIndex){
             // generateQuestion(currentQuestion)
         // })
-        
+
         // create current question var, use to generate next Q when answered
         // can use jquery .empty() to empty div
 

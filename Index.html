@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
-    
-<button type="button" class="btn btn-info" id="start">Click Here to Begin!</button>
-<div class="container questionContainer"></div>
-    
+    <header class="container">Javascript Quiz!</header>
+    <div class="container">
+        <button type="button" class="m-5 d-inline btn btn-info" id="start">Click Here to Begin!</button>
+        <div class="row">
+            <h2 class="col-3 container container-fluid d-inline-flex float-left" id="qtimer"></h2>
+            <div class="col-6 container container-fluid d-inline questionContainer"></div>
+            <h3 class="col-3 container container-fluid d-inline-flex float-right" id="scoreBox"></h3>
+        </div>
+    </div>
 
-    
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
