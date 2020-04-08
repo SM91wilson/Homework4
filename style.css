@@ -1,0 +1,70 @@
+header {
+    box-sizing: border-box;
+    background-color: gray;
+    color: black;
+    text-align: center;
+    vertical-align: auto;
+    height: 8rem;
+    margin: 2rem;
+    padding: rem;
+    margin-bottom: 10rem;
+}
+
+body{
+    background-color:lightblue;
+    text-align: center;
+}
+
+#start{
+    font-size: x-large;
+    font-weight: bold;
+    height: 100px;
+}
+.card-title{
+    font-size: large;
+    font-weight: bolder;
+}
+
+.card {
+    background-color: lightgray;
+    text-align: center;
+    height: 260px;
+    padding: 1rem;
+    justify-content: center;
+}
+
+label{
+    font-size: large;
+    font-weight: bold;
+}
+form{
+    background-color: lightgray;
+    padding: 1rem;
+    text-align: center;
+}
+
+#scoreBox{
+    text-align: center;
+    justify-content: center;
+    height: 260px;
+    width: 150px;
+    padding: 3rem;
+}
+
+#qtimer{
+    padding: 3rem;
+    height: 260px;
+    width: 150px;
+}
+
+.btn{
+    width: 75%;
+}
+
+#scorePage{
+    width: 20%;
+}
+
+#submit{
+    width: 20%;
+}

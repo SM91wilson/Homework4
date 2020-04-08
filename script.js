@@ -37,22 +37,31 @@ let score = 0;
 var qtimer = document.getElementById("qtimer")
 var timeLeft = 41;
 let q = quizQuestions[currentQuestion];
+var highScores = JSON.parse(localStorage.getItem("highscore")) || [];
+var hiddenScoreForm = document.getElementsByClassName('scoreForm');
+var scoreDiv = $('.scoreDiv')
+var questionTitle = $('.questionTitle');
+var questionBox = $('.questionBox');
+var scoreBox = $("#scoreBox");
+$(hiddenScoreForm).hide();
+$(scoreDiv).hide();
+$(scoreBox).hide();
+
 
 // function to generate questions
 function generateQuestion() {
     // var to set the current question according to the object
-    var questionBox = document.createElement("DIV");
+     $(questionBox).empty();
     // adds the text content of the current question
-    questionBox.innerHTML = "<p>" + q.question + "</p>";
-    $(questionBox).appendTo(questionContainer);
+    $(questionTitle).text(q.question);
     // loops through the answers, creating a button for each and adding the text content from the array
     q.answers.forEach((answer, answerIndex) => {
-        var answerBtns = document.createElement("BUTTON");
+        var answerBtns = $('<button>');
         // set attribute to try get the index of the answer from the array
-        answerBtns.setAttribute("index", answerIndex);
-        answerBtns.classList.add("d-flex", "flex-column");
-        answerBtns.innerHTML = answer;
-        $(answerBtns).appendTo(questionContainer);
+        $(answerBtns).attr("index", answerIndex);
+        $(answerBtns).addClass("d-flex flex-column btn btn-info");
+        $(answerBtns).text(answer);
+        $(answerBtns).appendTo(questionBox);
 
     });
     // event listener to identify which button is being clicked
@@ -73,6 +82,7 @@ function generateNextQuestion() {
 
 // function to generate the timer
 function generateTimer() {
+    $(qtimer).css("background-color", "lightgray")
     // function to reduce time
     var timerInterval = setInterval(function () {
         timeLeft--;
@@ -82,6 +92,7 @@ function generateTimer() {
             clearInterval(timerInterval);
             $(questionContainer).empty();
             qtimer.textContent = "Time's Up!"
+            end();
         }
     }, 1000);
     if (currentQuestion === finalQuestion) {
@@ -90,46 +101,64 @@ function generateTimer() {
 }
 
 function scoreBoard() {
-    var scoreBox = document.getElementById("scoreBox");
-    scoreBox.innerHTML = "score:" + score;
-    $(scoreBox).appendTo(body);
+    $(scoreBox).show();
+    $(scoreBox).css("background-color", "lightgray");
+    $(scoreBox).text("score:" + score);
+    // $(scoreBox).appendTo(body);
 }
 
 function checkAnswer() {
     if (currentQuestion === finalQuestion) {
+        score++;
         end();
         return
     } else if (this.textContent === q.correctAnswer) {
         if (currentQuestion < finalQuestion) {
             $(scoreBox).empty();
-            $(questionContainer).empty();
+            $(questionTitle).empty();
+            $(questionBox).empty();
             generateNextQuestion();
         }
         score++;
         scoreBoard();
-    } else if (currentQuestion === finalQuestion) {
-        end();
     } else {
         timeLeft -= 5;
     };
 };
 
 function end() {
-    $(questionContainer).empty();
+    $(questionContainer).remove();
     $(qtimer).remove();
     $("<h1>").text("Finished!").appendTo(body);
     $("<h2>").text("You Scored: " + score + "!").appendTo(body);
     $(scoreBox).remove();
-    $("<form>").appendTo(body)
-    $("<label>").attr("for", "initials").text("Initials:").appendTo("form");
-    $("<input>").attr({"type": "text"},{"id": "initials"},{"name":"initials"}).appendTo("form");
-    $("<button>").attr({"type": "submit"}, {"class": "btn"}).appendTo("form");
+    $(scoreDiv).show();
+    $(hiddenScoreForm).show('slow');
+    
 };
 
-$("submit").on("click", function(event){
-    event.preventDefault();
-    var highScores = JSON.parse(localStorage.getItem("highscore")) || [];
+function saveScore() {
+    var initialsBox = document.getElementsByName('initials');
+    var initials = initialsBox.value;
+    console.log(initials);
+    var newHighScore = {
+        initials: initials + ' ',
+        score: score
+    }
+    highScores.push(newHighScore);
+    localStorage.setItem('highscore', JSON.stringify(highScores));
+}
 
+
+$("#submit").on("click", function (event) {
+    event.preventDefault();
+    saveScore();
+})
+
+$('#scorePage').on('click', function (scorePage) {
+    scorePage.preventDefault();
+    window.open('highscores.html');
+    scoreTable();
 })
 
 function beginQuiz() {
@@ -137,10 +166,16 @@ function beginQuiz() {
     scoreBoard();
     generateTimer();
     generateQuestion();
-
 };
 
-// save final score to local storage
+// function scoreTable() {
+//     var scoresList = $('.scoreList')
+//     highScores.forEach(function (entry) {
+//         $('<li>').text(entry).appendTo(scoresList);
+
+//     })
+// }
+
 start.addEventListener("click", beginQuiz);
 
 

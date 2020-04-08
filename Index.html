@@ -7,15 +7,31 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header class="container">Javascript Quiz!</header>
+    <header class="container rounded">
+        <h1 class='justify-content-center'>Javascript Quiz!</h1>
+    </header>
     <div class="container">
-        <button type="button" class="m-5 d-inline btn btn-info" id="start">Click Here to Begin!</button>
         <div class="row">
+            <div class="col-7 container container-fluid d-inline scoreDiv">
+                <form class="scoreForm justify-content-center">
+                    <label for='initials'>Initials:</label>
+                    <input type='text' id='initials' name='initials'>
+                    <input type="submit" class="btn btn-info" id='submit' value="Submit">
+                    <br>
+                    <button class='btn btn-info' id='scorePage'> Highscores Page</button>
+                </form>
+            </div>
+            
+            <div class="col-6 card questionContainer rounded">
+                <button type="button" class="m-5 d-inline btn btn-info" id="start">Click Here to Begin!</button>
+                <div class="card-title questionTitle"></div>
+                <div class="card-body questionBox"></div>
+            </div>
             <h2 class="col-3 container container-fluid d-inline-flex float-left" id="qtimer"></h2>
-            <div class="col-6 container container-fluid d-inline questionContainer"></div>
             <h3 class="col-3 container container-fluid d-inline-flex float-right" id="scoreBox"></h3>
         </div>
     </div>
