@@ -8,11 +8,26 @@ header {
     margin: 2rem;
     padding: rem;
     margin-bottom: 10rem;
+    width: 66%;
+    justify-content: center;
 }
 
 body{
     background-color:lightblue;
     text-align: center;
+}
+
+.scoreList{
+    background-color: lightgray;
+    width: 40%;
+    justify-content: center;
+    margin: auto;
+}
+
+li{
+    font-size: large;
+    font-weight: bold;
+    padding: 5px;
 }
 
 #start{
@@ -37,6 +52,13 @@ label{
     font-size: large;
     font-weight: bold;
 }
+
+.highscoreTitle{
+    font-size: x-large;
+    font-weight: bolder;
+    padding: 2rem;
+}
+
 form{
     background-color: lightgray;
     padding: 1rem;
@@ -67,4 +89,11 @@ form{
 
 #submit{
     width: 20%;
+}
+
+.clear{
+    width: 20%;
+    margin: 5rem;
+    font-size: large;
+    font-weight: bold;
 }

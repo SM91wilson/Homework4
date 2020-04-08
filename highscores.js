@@ -1,4 +1,5 @@
 var highScores = JSON.parse(localStorage.getItem("highscore")) || [];
+var clearScores = $('.clear');
 console.log(highScores);
 
 function scoreTable() {
@@ -9,3 +10,10 @@ function scoreTable() {
     })
 }
 scoreTable();
+
+
+
+$(clearScores).on('click', function(){
+    $('.scoreList').empty();
+    localStorage.clear();
+});
