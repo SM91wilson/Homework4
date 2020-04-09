@@ -152,7 +152,6 @@ $("#submit").on("click", function (event) {
     event.preventDefault();
     var initials = document.querySelector('#initials').value;
     console.log(initials);
-    // var initials = initialsBox.value;
     saveScore(initials);
 })
 
