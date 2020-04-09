@@ -138,9 +138,7 @@ function end() {
 };
 
 function saveScore() {
-    var initialsBox = document.getElementsByName('initials');
-    var initials = initialsBox.value;
-    console.log(initials);
+    var initials = document.querySelector('#initials').value;
     var newHighScore = {
         initials: initials + ' ',
         score: score
@@ -152,13 +150,16 @@ function saveScore() {
 
 $("#submit").on("click", function (event) {
     event.preventDefault();
-    saveScore();
+    var initials = document.querySelector('#initials').value;
+    console.log(initials);
+    // var initials = initialsBox.value;
+    saveScore(initials);
 })
 
 $('#scorePage').on('click', function (scorePage) {
     scorePage.preventDefault();
     window.open('highscores.html');
-    scoreTable();
+
 })
 
 function beginQuiz() {

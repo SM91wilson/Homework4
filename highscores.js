@@ -1,12 +1,12 @@
 var highScores = JSON.parse(localStorage.getItem("highscore")) || [];
 var clearScores = $('.clear');
-console.log(highScores);
+console.log(highScores)
 
 function scoreTable() {
     var scoresList = $('.scoreList')
     highScores.forEach(function (entry) {
-        $('<li>').text(entry).appendTo(scoresList);
-
+        console.log(entry)
+        $('<li>').text((entry.initials) + ':' + (entry.score)).appendTo(scoresList);
     })
 }
 scoreTable();
@@ -16,4 +16,5 @@ scoreTable();
 $(clearScores).on('click', function(){
     $('.scoreList').empty();
     localStorage.clear();
+    highScores.splice(0, highScores.length);
 });
